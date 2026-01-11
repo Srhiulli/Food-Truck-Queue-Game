@@ -1,14 +1,13 @@
-// app/hooks/useQueue.ts
 import { useState } from 'react'
 import { Customer } from '../types/Customer'
 
 export function useQueue(limit = 5) {
   const [queue, setQueue] = useState<Customer[]>([])
 
-  function enqueue(c: Customer) {
+  function enqueue(c: Customer = {id: 1, order: '🍟 Fries'}) {
     if (queue.length >= limit) return false
-    setQueue(increaseCustomer => [...increaseCustomer, c])
-    return true
+    setQueue(queue.concat(c))
+    return c
   }
 
   function dequeue() {
