@@ -1,6 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚚 Food Truck Queue Game
 
-## Getting Started
+Um jogo interativo de gerenciamento de fila de food truck construído com Next.js que demonstra o conceito de estrutura de dados **FIFO (First In, First Out)**.
+
+## 📚 Sobre FIFO (First In, First Out)
+
+FIFO é um princípio de gerenciamento de fila onde o **primeiro elemento a entrar é o primeiro a sair**, similar a uma fila de pessoas em um estabelecimento comercial.
+
+### Como funciona no jogo:
+
+1. **Enqueue (Adicionar à fila)**: Quando um novo cliente chega, ele é adicionado ao **final da fila**
+2. **Dequeue (Remover da fila)**: Quando você serve um cliente, sempre serve o **primeiro da fila** (o que chegou primeiro)
+3. **Limite de capacidade**: A fila tem um limite máximo de 5 clientes
+
+### Implementação
+
+A lógica da fila FIFO está implementada no hook `useQueue`:
+
+```typescript
+function enqueue(c: Customer) {
+  if (queue.length >= limit) return false
+  setQueue(increaseCustomer => [...increaseCustomer, c])  // Adiciona no final
+  return c
+}
+
+function dequeue() {
+  if (queue.length === 0) return null
+  const first = queue[0]  // Pega o primeiro
+  setQueue(queue.slice(1))  // Remove o primeiro
+  return first
+}
+```
+
+### Exemplo visual:
+
+```
+Fila inicial: []
+enqueue(Cliente1) → [Cliente1]
+enqueue(Cliente2) → [Cliente1, Cliente2]
+enqueue(Cliente3) → [Cliente1, Cliente2, Cliente3]
+dequeue() → Remove Cliente1 → [Cliente2, Cliente3]
+dequeue() → Remove Cliente2 → [Cliente3]
+```
+
+## 🎮 Como Jogar
+
+1. Clique em **"New customer"** para adicionar clientes à fila
+2. Veja o pedido de cada cliente no balão de fala
+3. Selecione os ingredientes necessários para preparar o pedido
+4. Clique em **"Serve Customer"** quando tiver todos os ingredientes corretos
+5. O primeiro cliente da fila será atendido (FIFO!)
+
+## 🚀 Getting Started
 
 First, run the development server:
 
