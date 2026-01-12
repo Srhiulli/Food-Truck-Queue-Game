@@ -25,14 +25,14 @@ export default function Page() {
     if (!itens.length) return
     const ordered = costumer[0]?.order
     const requiredItens = ordered ? PREPARE_ORDER_ITENS[ordered] : []
-
     const hasAllItens = requiredItens.every((requiredItem) => {
       const hasItem = itens.includes(requiredItem)
       return hasItem
     })
 
     if (hasAllItens) {
-      dequeue()
+      const dequeuedCustomer = dequeue()
+      setCostumer(dequeuedCustomer ? costumer.slice(1) : costumer)
       setItens([])
     }
   }
